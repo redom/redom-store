@@ -18,10 +18,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pakastin/redom-store.git"
+    "url": "git+https://github.com/redom/redom-store.git"
   },
   "bugs": {
-    "url": "https://github.com/pakastin/redom-store/issues"
+    "url": "https://github.com/redom/redom-store/issues"
   },
   "devDependencies": {
     "gh-pages": "~1.0.0",
