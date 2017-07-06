@@ -1,0 +1,34 @@
+{
+  "name": "@redom/store",
+  "version": "1.0.0",
+  "description": "Immutable keypath store for RE:DOM",
+  "main": "dist/redom-store.js",
+  "module": "dist/redom-store.es.js",
+  "scripts": {
+    "dev": "node watch",
+    "dist": "gh-pages -d dist",
+    "build-es": "rollup -w -m -c -f es index.js -o dist/redom-store.es.js",
+    "build-js": "rollup -n redom-store -w -c -f umd index.js -o dist/redom-store.js",
+    "preversion": "npm test",
+    "prepublish": "npm test",
+    "postpublish": "npm run dist",
+    "test": "tape test"
+  },
+  "author": "Juha Lindstedt",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pakastin/redom-store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pakastin/redom-store/issues"
+  },
+  "devDependencies": {
+    "gh-pages": "~1.0.0",
+    "rollup": "~0.43.0",
+    "rollup-plugin-buble": "~0.15.0",
+    "rollup-plugin-butternut": "~0.1.0",
+    "rollup-watch": "~4.0.0",
+    "tape": "~4.7.0"
+  }
+}
