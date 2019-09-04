@@ -24,11 +24,11 @@
     "url": "https://github.com/redom/redom-store/issues"
   },
   "devDependencies": {
-    "gh-pages": "~1.0.0",
-    "rollup": "~0.43.0",
-    "rollup-plugin-buble": "~0.15.0",
+    "gh-pages": "~2.1.1",
+    "rollup": "~1.20.3",
+    "rollup-plugin-buble": "~0.19.8",
     "rollup-plugin-butternut": "~0.1.0",
-    "rollup-watch": "~4.0.0",
-    "tape": "~4.7.0"
+    "rollup-watch": "~4.3.1",
+    "tape": "~4.11.0"
   }
 }
