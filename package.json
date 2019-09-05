@@ -1,34 +1,48 @@
 {
-  "name": "@redom/store",
-  "version": "1.0.0",
-  "description": "Immutable keypath store for RE:DOM",
-  "main": "dist/redom-store.js",
-  "module": "dist/redom-store.es.js",
-  "scripts": {
-    "dev": "node watch",
-    "dist": "gh-pages -d dist",
-    "build-es": "rollup -w -m -c -f es index.js -o dist/redom-store.es.js",
-    "build-js": "rollup -n redom-store -w -c -f umd index.js -o dist/redom-store.js",
-    "preversion": "npm test",
-    "prepublish": "npm test",
-    "postpublish": "npm run dist",
-    "test": "tape test"
-  },
-  "author": "Juha Lindstedt",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/redom/redom-store.git"
-  },
-  "bugs": {
-    "url": "https://github.com/redom/redom-store/issues"
-  },
-  "devDependencies": {
-    "gh-pages": "~1.0.0",
-    "rollup": "~0.43.0",
-    "rollup-plugin-buble": "~0.15.0",
-    "rollup-plugin-butternut": "~0.1.0",
-    "rollup-watch": "~4.0.0",
-    "tape": "~4.7.0"
-  }
+    "name": "@redom/store",
+    "version": "1.0.0",
+    "description": "Immutable keypath store for RE:DOM",
+    "main": "dist/redom-store.js",
+    "module": "dist/redom-store.es.js",
+    "scripts": {
+        "dev": "rollup -c -w",
+        "build": "rollup -c",
+        "test": "eslint src && npm run build && jest"
+    },
+    "author": "Juha Lindstedt",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/redom/redom-store.git"
+    },
+    "bugs": {
+        "url": "https://github.com/redom/redom-store/issues"
+    },
+    "babel": {
+        "presets": [
+            [
+                "env",
+                {
+                    "targets": {
+                        "node": "current"
+                    }
+                }
+            ]
+        ]
+    },
+    "devDependencies": {
+        "babel-jest": "^24.3.1",
+        "babel-preset-env": "^1.6.1",
+        "eslint": "^6.3.0",
+        "eslint-config-prettier": "^6.1.0",
+        "eslint-plugin-prettier": "^3.1.0",
+        "jest": "^24.3.1",
+        "prettier": "^1.18.2",
+        "redom": "^3.24.1",
+        "rollup": "^1.19.4",
+        "rollup-plugin-babel-minify": "^9.0.0",
+        "rollup-plugin-butternut": "~0.1.0",
+        "rollup-plugin-commonjs": "^10.0.2",
+        "rollup-plugin-node-resolve": "^5.2.0"
+    }
 }
