@@ -1,13 +1,13 @@
 import { assign } from "./util";
 
 export default class Store {
-    constructor(initialState) {
-        this.subscribers = [];
-        this.state = initialState || {};
+    constructor(state) {
+        this.listeners = [];
+        this.state = state || {};
     }
 
     subscribe(listener) {
-        this.subscribers.push(listener);
+        this.listeners.push(listener);
         return () => {
             this.unsubscribe(listener);
         };
@@ -15,19 +15,19 @@ export default class Store {
 
     unsubscribe(listener) {
         let out = [];
-        for (let i = 0; i < this.subscribers.length; i++) {
-            if (this.subscribers[i] === listener) {
+        for (let i = 0; i < this.listeners.length; i++) {
+            if (this.listeners[i] === listener) {
                 listener = null;
             } else {
-                out.push(this.subscribers[i]);
+                out.push(this.listeners[i]);
             }
         }
-        this.subscribers = out;
+        this.listeners = out;
     }
 
     setState(state, action) {
         this.state = assign(assign({}, this.state), state);
-        let currentListeners = this.subscribers;
+        let currentListeners = this.listeners;
         for (let i = 0; i < currentListeners.length; i++) {
             currentListeners[i](this.state, action);
         }
@@ -44,9 +44,7 @@ export default class Store {
 
         return function() {
             let args = [this.state];
-            for (let i = 0; i < arguments.length; i++) {
-                args.push(arguments[i]);
-            }
+            for (let i = 0; i < arguments.length; i++) args.push(arguments[i]);
             let ret = action.apply(this, args);
             if (ret !== null) {
                 if (ret.then) {
