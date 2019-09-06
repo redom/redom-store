@@ -4,13 +4,21 @@ export default class Reset {
     constructor(store) {
         this.store = store;
 
-        const { count } = this.store.getState();
-        this.initCount = count;
+        let { count } = this.store.getState();
 
-        this.el = el("div", {}, el("button", { onclick: () => this.reset() }, "Reset"));
-    }
-
-    reset() {
-        this.store.setState({ count: this.initCount });
+        this.el = el(
+            "div",
+            {},
+            el(
+                "button",
+                {
+                    onclick: () =>
+                        this.store.setState({
+                            count: count,
+                        }),
+                },
+                "Reset"
+            )
+        );
     }
 }

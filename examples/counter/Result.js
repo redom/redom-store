@@ -6,7 +6,15 @@ export default class Result {
 
         const { count } = this.store.getState();
 
-        this.el = el("div", el("p", "Number of clicks: ", (this.result = el("strong", count))));
+        this.el = el(
+            "div",
+            el(
+                "h2",
+                { style: { color: "#d31b33" } },
+                "Number of clicks: ",
+                (this.result = el("span", { style: { color: "#000" } }, count))
+            )
+        );
 
         this.store.subscribe(state => {
             this.result.textContent = state.count;
