@@ -1,3 +1,7 @@
 import Store from "../../dist/redom-store.js";
 
-export const store = new Store();
+const state = {
+    count: 0,
+};
+
+export const store = new Store(state);

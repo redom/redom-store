@@ -1,88 +1,77 @@
 /* eslint-disable no-undef */
-import Store from "../src/store.js";
+import Store from "../dist/redom-store.js";
 
 describe("Store()", () => {
+    it("should add on init", () => {
+        let store = new Store({ a: "a", b: "a" });
+        expect(store.getState()).toMatchObject({ a: "a", b: "a" });
+    });
+
     it("should update states", () => {
         let store = new Store();
-        expect(store.get()).toMatchObject({});
-        store.set({ a: "b" });
-        expect(store.get()).toMatchObject({ a: "b" });
-        store.set({ c: "d" });
-        expect(store.get()).toMatchObject({ a: "b", c: "d" });
-        store.set({ a: "x" });
-        expect(store.get()).toMatchObject({ a: "x", c: "d" });
-        store.set({ c: null });
-        expect(store.get()).toMatchObject({ a: "x", c: null });
-        store.set({ c: undefined });
-        expect(store.get()).toMatchObject({ a: "x", c: undefined });
+        expect(store.getState()).toMatchObject({});
+        store.setState({ a: "a" });
+        expect(store.getState()).toMatchObject({ a: "a" });
+        store.setState({ c: "c" });
+        expect(store.getState()).toMatchObject({ a: "a", c: "c" });
+        store.setState({ a: "aa" });
+        expect(store.getState()).toMatchObject({ a: "aa", c: "c" });
     });
 
     it("should subscribe", () => {
         let store = new Store();
 
-        let sub1 = jest.fn();
-        let sub2 = jest.fn();
+        let fn1 = jest.fn();
+        let fn2 = jest.fn();
         let action;
 
-        let rval = store.subscribe(sub1);
+        let rval = store.subscribe(fn1);
         expect(rval).toBeInstanceOf(Function);
 
-        store.set({ a: "b" });
-        expect(sub1).toBeCalledWith(store.get(), action);
+        store.setState({ a: "a" });
+        expect(fn1).toBeCalledWith(store.getState(), action);
 
-        store.subscribe(sub2);
-        store.set({ c: "d" });
+        store.subscribe(fn2);
+        store.setState({ c: "c" });
 
-        expect(sub1).toHaveBeenCalledTimes(2);
-        expect(sub1).toHaveBeenLastCalledWith(store.get(), action);
-        expect(sub2).toBeCalledWith(store.get(), action);
+        expect(fn1).toHaveBeenCalledTimes(2);
+        expect(fn1).toHaveBeenLastCalledWith(store.getState(), action);
+        expect(fn2).toBeCalledWith(store.getState(), action);
     });
 
     it("should unsubscribe", () => {
         let store = new Store();
 
-        let sub1 = jest.fn();
-        let sub2 = jest.fn();
-        let sub3 = jest.fn();
+        let fn1 = jest.fn();
+        let fn2 = jest.fn();
 
-        store.subscribe(sub1);
-        store.subscribe(sub2);
-        let unsub3 = store.subscribe(sub3);
+        store.subscribe(fn1);
+        store.subscribe(fn2);
 
-        store.set({ a: "b" });
-        expect(sub1).toBeCalled();
-        expect(sub2).toBeCalled();
-        expect(sub3).toBeCalled();
+        store.setState({ a: "a" });
+        expect(fn1).toBeCalled();
+        expect(fn2).toBeCalled();
 
-        sub1.mockClear();
-        sub2.mockClear();
-        sub3.mockClear();
+        fn1.mockClear();
+        fn2.mockClear();
 
-        store.unsubscribe(sub2);
+        store.unsubscribe(fn2);
 
-        store.set({ c: "d" });
-        expect(sub1).toBeCalled();
-        expect(sub2).not.toBeCalled();
-        expect(sub3).toBeCalled();
+        store.setState({ c: "c" });
+        expect(fn1).toBeCalled();
+        expect(fn2).not.toBeCalled();
 
-        sub1.mockClear();
-        sub2.mockClear();
-        sub3.mockClear();
+        fn1.mockClear();
+        fn2.mockClear();
 
-        store.unsubscribe(sub1);
+        store.unsubscribe(fn1);
 
-        store.set({ e: "f" });
-        expect(sub1).not.toBeCalled();
-        expect(sub2).not.toBeCalled();
-        expect(sub3).toBeCalled();
+        store.setState({ e: "f" });
+        expect(fn1).not.toBeCalled();
+        expect(fn2).not.toBeCalled();
 
-        sub3.mockClear();
-
-        unsub3();
-
-        store.set({ g: "h" });
-        expect(sub1).not.toBeCalled();
-        expect(sub2).not.toBeCalled();
-        expect(sub3).not.toBeCalled();
+        store.setState({ g: "h" });
+        expect(fn1).not.toBeCalled();
+        expect(fn2).not.toBeCalled();
     });
 });

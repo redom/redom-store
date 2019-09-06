@@ -1,13 +1,13 @@
 import { assign } from "./util";
 
 export default class Store {
-    constructor(data) {
-        this.listeners = [];
-        this.data = data || {};
+    constructor(initialState) {
+        this.subscribers = [];
+        this.state = initialState || {};
     }
 
     subscribe(listener) {
-        this.listeners.push(listener);
+        this.subscribers.push(listener);
         return () => {
             this.unsubscribe(listener);
         };
@@ -15,41 +15,43 @@ export default class Store {
 
     unsubscribe(listener) {
         let out = [];
-        for (let i = 0; i < this.listeners.length; i++) {
-            if (this.listeners[i] === listener) {
+        for (let i = 0; i < this.subscribers.length; i++) {
+            if (this.subscribers[i] === listener) {
                 listener = null;
             } else {
-                out.push(this.listeners[i]);
+                out.push(this.subscribers[i]);
             }
         }
-        this.listeners = out;
+        this.subscribers = out;
     }
 
-    set(update, overwrite, action) {
-        this.data = overwrite ? update : assign(assign({}, this.data), update);
-        let currentListeners = this.listeners;
+    setState(state, action) {
+        this.state = assign(assign({}, this.state), state);
+        let currentListeners = this.subscribers;
         for (let i = 0; i < currentListeners.length; i++) {
-            currentListeners[i](this.data, action);
+            currentListeners[i](this.state, action);
         }
     }
 
-    get() {
-        return this.data;
+    getState() {
+        return this.state;
     }
 
-    action(action) {
+    dispatch(action) {
         function apply(result) {
-            this.set(result, false, action);
+            this.setState(result, false, action);
         }
 
         return function() {
-            let args = [this.data];
+            let args = [this.state];
             for (let i = 0; i < arguments.length; i++) {
                 args.push(arguments[i]);
             }
             let ret = action.apply(this, args);
             if (ret !== null) {
-                if (ret.then) return ret.then(apply);
+                if (ret.then) {
+                    return ret.then(apply);
+                }
                 return apply(ret);
             }
         };

@@ -19,7 +19,7 @@ import Store from "@redom/store";
 new Store();
 ```
 
-## API
+## API Reference
 
 ### Store
 
@@ -38,26 +38,19 @@ store.set({ a: "b" }); // logs { a: 'b' }
 store.set({ c: "d" }); // logs { a: 'b', c: 'd' }
 ```
 
-### action
+### getState()
 
-Create a bound copy of the given action function.
-The bound returned function invokes action() and persists the result back to the store.
-If the return value of `action` is a Promise, the resolved value will be used as state.
+Retrieve the current state object.
 
-| Argument | Type       | Description                                                   |
-| -------- | ---------- | ------------------------------------------------------------- |
-| action   | `Function` | An action of the form `action(state, ...args) -> stateUpdate` |
-
-### set
+### setState(state, ?action)
 
 Apply a partial state object to the current state, invoking registered listeners.
 
-| Argument  | Type      | Description                                                                                      |
-| --------- | --------- | ------------------------------------------------------------------------------------------------ |
-| update    | `Object`  | An object with properties to be merged into state                                                |
-| overwrite | `Boolean` | If `true`, update will replace state instead of being merged into it (optional, default `false`) |
+| Argument | Type     | Description                                       |
+| -------- | -------- | ------------------------------------------------- |
+| state    | `Object` | An object with properties to be merged into state |
 
-### subscribe
+### subscribe(listener)
 
 Register a listener function to be called whenever state is changed. Returns an `unsubscribe()` function.
 
@@ -65,7 +58,7 @@ Register a listener function to be called whenever state is changed. Returns an 
 | -------- | ---------- | ----------------------------------------------------------------- |
 | listener | `Function` | A function to call when state changes. Gets passed the new state. |
 
-### unsubscribe
+### unsubscribe(listener)
 
 Remove a previously-registered listener function.
 
@@ -73,9 +66,15 @@ Remove a previously-registered listener function.
 | -------- | ---------- | ----------------------------------------------------------------------- |
 | listener | `Function` | The callback previously passed to `subscribe()` that should be removed. |
 
-### get
+### dispatch(action)
 
-Retrieve the current state object.
+Create a bound copy of the given action function.
+The bound returned function invokes dispatch() and persists the result back to the store.
+If the return value of `dispatch` is a Promise, the resolved value will be used as state.
+
+| Argument | Type       | Description                                                   |
+| -------- | ---------- | ------------------------------------------------------------- |
+| action   | `Function` | An action of the form `action(state, ...args) -> stateUpdate` |
 
 ## License
 
