@@ -4,7 +4,7 @@ export default class Reset {
     constructor(store) {
         this.store = store;
 
-        let { count, resetCount } = this.store.getState();
+        let { count } = this.store.getState();
 
         this.el = el(
             "div",
