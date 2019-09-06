@@ -2,7 +2,7 @@
 import Store from "../dist/redom-store.js";
 
 describe("Store()", () => {
-    it("should add on init", () => {
+    it("should add values on init", () => {
         let store = new Store({ a: "a", b: "a" });
         expect(store.getState()).toMatchObject({ a: "a", b: "a" });
     });
