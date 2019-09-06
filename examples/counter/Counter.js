@@ -23,7 +23,7 @@ export default class Counter {
                 this.store.setState({ count: --count });
                 break;
             case "INCREMENT_IF_ODD":
-                if ((this.store + 1) % 2 === 0) {
+                if ((count + 1) % 2 === 0) {
                     this.store.setState({ count: ++count });
                 }
                 break;
