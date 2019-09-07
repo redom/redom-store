@@ -34,8 +34,8 @@ Creates a new store, which is a tiny evented state container.
 ```javascript
 let store = new Store();
 store.subscribe(state => console.log(state));
-store.set({ a: "b" }); // logs { a: 'b' }
-store.set({ c: "d" }); // logs { a: 'b', c: 'd' }
+store.setState({ a: "b" }); // logs { a: 'b' }
+store.setState({ c: "d" }); // logs { a: 'b', c: 'd' }
 ```
 
 ### getState()

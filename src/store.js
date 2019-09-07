@@ -37,21 +37,5 @@ export default class Store {
         return this.state;
     }
 
-    dispatch(action) {
-        function apply(result) {
-            this.setState(result, false, action);
-        }
-
-        return function() {
-            let args = [this.state];
-            for (let i = 0; i < arguments.length; i++) args.push(arguments[i]);
-            let ret = action.apply(this, args);
-            if (ret !== null) {
-                if (ret.then) {
-                    return ret.then(apply);
-                }
-                return apply(ret);
-            }
-        };
-    }
+    dispatch(action) {}
 }
